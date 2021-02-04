@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>props基本使用</title>
+</head>
+<body>
+    <!-- prepare a container-->
+    <div id="test"></div>
+    <div id="test2"></div>
+    <div id="test3"></div>
+
+    <!-- import react core libraries-->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- import recat-dom -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- import babel-->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <!--引入prop-types,对于组件标签属性进行限制-->
+    <script type='text/javascript' src="../js/prop-types.js"></script>
+    
+    <script type="text/babel"> /*此处一定要写babel,表示写的是JSX，不是JS */
+    //创建组件
+    class Person extends React.Component{
+            //对标签属性进行类型，必要性的限制
+        static propTypes = {
+            name:PropTypes.string.isRequired,//限制name必传且为字符串
+            sex:PropTypes.string,//限制sex为字符串
+            age:PropTypes.number,//限制age为数值
+            speak:PropTypes.func//限制speak为函数
+        }
+        
+        //指定默认标签属性值
+        static defaultProps={
+            sex:'男', //sex默认值为男
+            age:18 //年龄默认值为18
+        }
+
+        render(){
+            console.log(this);
+            const {name,age,sex} = this.props;
+            //props是只读的
+           // this.props.name="cll";//此行代码会报错，因为props是只读的
+            return (
+                <ul>
+                    <li>姓名:{name}</li>
+                    <li>性别:{sex}</li>
+                    <li>年龄:{age+1}</li>
+                </ul>
+            )
+        }
+    }
+
+
+    //渲染组件到页面
+    ReactDOM.render(<Person name="tom" age={18} sex="女"/>,document.getElementById('test'));
+    ReactDOM.render(<Person name="jack" age={28} sex="女"/>,document.getElementById('test2'));
+    const p = {name:'lucy',sex:'女',age:19};
+   //console.log('@', ...p); //@
+    
+    // 这儿的...就是展开对象，因为babel+react，但是只支持标签
+    //但是原生JS不支持...展开对象
+    ReactDOM.render(<Person {...p}/>,document.getElementById('test3'));
+    </script>
+</body>
+</html>

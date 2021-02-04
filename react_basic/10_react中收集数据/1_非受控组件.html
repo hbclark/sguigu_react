@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>1_非受控组件</title>
+</head>
+<body>
+    <!-- prepare a container-->
+    <div id="test"></div>
+
+    <!-- import react core libraries-->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- import recat-dom -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- import babel-->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    
+    <script type="text/babel"> /*此处一定要写babel,表示写的是JSX，不是JS */
+    //创建组件
+    class Login extends React.Component{
+
+        handleSubmit = (event)=>{
+            //表单提交默认刷新，preventDefault取消默认行为
+            event.preventDefault();
+            const {username,password} = this;
+            alert(`你输入的用户名是${username.value},你输入的密码是${password.value}`);
+        }
+
+        render(){
+            return(
+                <form  onSubmit={this.handleSubmit}>
+                    用户名：<input ref={c=>this.username = c} type="text" name='userName'/>  
+                    密码:   <input ref={c=>this.password = c} type="password" name='password'/>
+                    <button>登录</button>
+                </form>
+            )
+        }
+
+    }
+    //2.渲染虚拟DOM到页面
+    ReactDOM.render(<Login/>,document.getElementById('test'));
+    </script>
+</body>
+</html>

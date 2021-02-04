@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>props基本使用</title>
+</head>
+<body>
+    <!-- prepare a container-->
+    <div id="test"></div>
+    <div id="test2"></div>
+
+    <!-- import react core libraries-->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- import recat-dom -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- import babel-->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <!---->
+    <script type="text/babel"> /*此处一定要写babel,表示写的是JSX，不是JS */
+    //创建组件
+    class Person extends React.Component{
+
+        render(){
+            console.log(this);
+            return (
+                <ul>
+                    <li>姓名:{this.props.name}</li>
+                    <li>性别:{this.props.sex}</li>
+                    <li>年龄:{this.props.age}</li>
+                </ul>
+            )
+        }
+    }
+    ReactDOM.render(<Person name="tom" age="18" sex="女"/>,document.getElementById('test'));
+    
+    const p = {name:'lucy',sex:'女',age:19};
+    console.log('@', ...p); //@
+    
+    // 这儿的...就是展开对象，因为babel+react，但是只支持标签
+    //但是原生JS不支持...展开对象
+    ReactDOM.render(<Person {...p}/>,document.getElementById('test2'));
+    </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>state</title>
+</head>
+
+<body>
+    <!-- prepare a container-->
+    <div id="test"></div>
+
+    <!-- import react core libraries-->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- import recat-dom -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- import babel-->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <!---->
+    <script type="text/babel"> /*此处一定要写babel,表示写的是JSX，不是JS */
+        //1.创建组件
+        class Weather extends React.Component {
+            state = {isHot:false};
+
+            render() {
+                const { isHot } = this.state;
+                console.log(isHot);// Weather {...} 实例对象
+                return <h1 onClick={this.changeWeather}>今天天气很{isHot?'炎热':'凉爽'}</h1>
+            }
+            changeWeather = ()=>{
+                //changeWeather放在哪里？--Weather原型对象上，供实例使用
+                //由于changeWeather是作为onClick的回调，所以不是通过实例
+                //调用，是直接调用
+                //类中的方法默认开启了局部的严格模式，所以changeWeather中的
+                //this为undefined
+                const {isHot} = this.state;
+                this.setState({isHot:!isHot});
+            }
+        }
+        //2.渲染组件到页面
+        ReactDOM.render(<Weather />, document.getElementById('test'));
+        /* const title = document.getElementById('title');
+        title.addEventListener('click', () => {
+            console.log('标题被点击了')
+        }) */
+        /* const title = document.getElementById('title');
+        title.onclick = ()=>{
+           alert('标题被点击了')
+        } */
+    </script>
+</body>
+
+</html>
